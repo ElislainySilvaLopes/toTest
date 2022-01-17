@@ -1,3 +1,5 @@
+const { eq } = require("lodash");
+
 describe("toTest", () =>{
 
     beforeEach(() => cy.visit("http://localhost/siteelis/toTest.html"));
@@ -35,17 +37,14 @@ describe("toTest", () =>{
     it("Selecionar o sexo feminino", () =>{
         cy.get('input[id="elementosForm:sexo:1"]').check();
      });
-    
+  
     /*Testes selecionar e desselecionar os checkbox comida favorita*/
     it("Selecionar qual sua comida favorita", () =>{
-        cy.get('input[id="elementosForm:comidaFavorita:0"]').check();
-        cy.get('input[id="elementosForm:comidaFavorita:1"]').check();
-        cy.get('input[id="elementosForm:comidaFavorita:2"]').check();
-        cy.get('input[id="elementosForm:comidaFavorita:3"]').check();
-        cy.get('input[id="elementosForm:comidaFavorita:0"]').uncheck();
-        cy.get('input[id="elementosForm:comidaFavorita:1"]').uncheck();
-        cy.get('input[id="elementosForm:comidaFavorita:2"]').uncheck();
-        cy.get('input[id="elementosForm:comidaFavorita:3"]').uncheck();
+        cy.get('input[id="elementosForm:comidaFavorita:0"]').check().uncheck();
+        cy.get('input[id="elementosForm:comidaFavorita:1"]').check().uncheck();
+        cy.get('input[id="elementosForm:comidaFavorita:2"]').check().uncheck();
+        cy.get('input[id="elementosForm:comidaFavorita:3"]').check().uncheck();
+        
     });
  
     /*Testes seleção da lista de escolaridade*/
@@ -73,14 +72,49 @@ describe("toTest", () =>{
     it("Preenchimento da caixa de texto sugestões", () =>{
         cy.get('textarea[name="elementosForm:sugestoes"]').type("Vôlei, Judô, Handebol, Ginastica, Hipismo");
     });
+    /*Testes clicar no botão da tabela clique aqui*/ 
+    it("Selecionar o clique aqui", () =>{
+        cy.get('input[value="Clique aqui"]').eq(0).click();
+        cy.get('input[value="Clique aqui"]').eq(1).click();
+        cy.get('input[value="Clique aqui"]').eq(2).click();
+        cy.get('input[value="Clique aqui"]').eq(3).click();
+        cy.get('input[value="Clique aqui"]').eq(4).click();
+             
+     });
+     /*Testes clicar no checkbox da tabela */ 
+    it("Selecionar os checkboxs", () =>{
+        cy.get('input[type="checkbox"]').eq(4).check().uncheck();
+        cy.get('input[type="checkbox"]').eq(5).check().uncheck();
+        cy.get('input[type="checkbox"]').eq(6).check().uncheck();
+        cy.get('input[type="checkbox"]').eq(7).check().uncheck();
+        cy.get('input[type="checkbox"]').eq(8).check().uncheck();
+     });
+
+    /*Testes de selecionar os radio buttons da tabela */ 
+    it("Selecionar os radio buttons", () =>{
+        cy.get('input[type="radio"]').eq(2).check();
+        cy.get('input[type="radio"]').eq(3).check();
+        cy.get('input[type="radio"]').eq(4).check();
+        cy.get('input[type="radio"]').eq(5).check();
+        cy.get('input[type="radio"]').eq(6).check();
+    });    
+
+    /*Testes de selecionar os radio buttons da tabela */ 
+    it("digitar na input da tabela", () =>{
+        cy.get('input[type="text"]').eq(2).type("Francisco");
+        cy.get('input[type="text"]').eq(3).type("Maria");
+        cy.get('input[type="text"]').eq(4).type("Usuario A");
+        cy.get('input[type="text"]').eq(5).type("Doutorado");
+        cy.get('input[type="text"]').eq(6).type("Usuário B");
+    });    
 
     /*Testes preenchimento da tabela*/
     it("Selecionar tabela", () =>{
           cy.get('input[name="elementosForm:tableUsuarios:2:j_idt440"]').click();
     });
 
-    /*Testes cadastrar usuário com alert nome é obrigatório*/
-    it("Clicar no botão cadastro sem digitar os campos obrigatórios", () =>{
+    /*Testes tentar cadastrar usuário sem preencher o campo obrigatório nome*/
+    it("Clicar no botão cadastro sem preencher o campo obrigatório nome", () =>{
         cy.get('input[name="elementosForm:cadastrar"]').click();
     });
 
@@ -99,7 +133,7 @@ describe("toTest", () =>{
 
     /*Teste no botão voltar*/
     it("Clicar no botão voltar", () =>{
-        cy.get('a[href="#"]').click();   
+        cy.contains('Voltar').click();
     });
 
     /*Teste no botão Alert*/
@@ -110,6 +144,11 @@ describe("toTest", () =>{
     /*Teste no botão Confirm*/
     it("Clicar no botão 'Confirm'", () =>{
         cy.get('input[id="confirm"]').click();       
+    });
+
+    /*Teste no botão Confirm*/
+    it("Clicar no botão 'Prompt'", () =>{
+        cy.get('input[id="prompt"]').click();      
     });
 
     /*Preencher e limpar o formulário*/
